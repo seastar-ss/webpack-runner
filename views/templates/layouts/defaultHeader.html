@@ -1,0 +1,41 @@
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+<!-- end #page-loader -->
+<!-- begin #page-container -->
+<div id="page-container" class="fade page-sidebar-fixed page-header-fixed in">
+    <!-- begin #header -->
+    <div id="header" class="header navbar navbar-default navbar-fixed-top" style="margin-top: 0.1px">
+        <!-- begin container-fluid -->
+        <div class="container-fluid">
+            <!--<%&#45;&#45;<span class="navbar-logo" ></span>&#45;&#45;%>-->
+            <!-- begin mobile sidebar expand / collapse button -->
+            <div class="navbar-header">
+                <a href="" class="navbar-brand">
+                    <img markup-inline src="../asset/_img_logo.svg"  style=" height: 30px;background-size: cover">
+
+                </a>
+                <a class="navbar-brand" style="position: relative;top:20px">
+                    <img src="../asset/title.png">
+                </a>
+            </div>
+            <!-- end mobile sidebar expand / collapse button -->
+            <!-- begin header navigation right -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown navbar-user">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="userImg glyphicon glyphicon-user"></i>
+                        <span id="txtUserName" class="hidden-xs">用户</span> <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInLeft">
+                        <li class="arrow"></li>
+                        <li><a href="../login/html-main.html">切换用户</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav navbar-nav navbar-right timeInNav">日期&nbsp;:<span id="currentTime"></span>（实时）</div>
+            <!-- end header navigation right -->
+        </div>
+        <!-- end container-fluid -->
+    </div>
+    <!-- end #header -->
+</div>

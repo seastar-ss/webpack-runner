@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html >
+<head>
+	{{include  tmpl='_httpHeader' /}}
+</head>
+<body class="fixed-sidebar fixed-footer" >
+<div class="main-wrapper" >
+	{{include  tmpl='_menu' /}}
+	<div id="page-wrapper" class="gray-bg">
+		{{include  tmpl='_header' /}}
+		<hr style="border:none;height: 0px;margin: 30px auto 5px auto;"/>
+		<!--{{!--include  tmpl='_topNav' /--}}-->
+		<div class="wrapper wrapper-content">
+			{{include  tmpl='__body' /}}
+		</div>
+		{{include  tmpl='_footer' /}}
+	</div>
+</div>
+{{include tmpl='_jsBottom' /}}
+</body>
+
+</html>

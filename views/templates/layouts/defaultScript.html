@@ -1,0 +1,142 @@
+<script src="../../static/js/jquery-1.9.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<!--<script src="../../static/js/plugins/metisMenu/jquery.metisMenu.js"  type="text/javascript" charset="utf-8"></script>-->
+
+
+
+{{!--
+<!--<script src="../static/js/bootstrap.min.js"  type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="../static/js/plugins/metisMenu/jquery.metisMenu.js"  type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="../static/js/plugins/slimscroll/jquery.slimscroll.min.js"  type="text/javascript" charset="utf-8"></script>-->
+
+<!--&lt;!&ndash;  &ndash;&gt;-->
+<!--<script src="../static/js/inspinia.js"  type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="../static/js/plugins/pace/pace.min.js"  type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="../static/js/jquery-ui-1.10.4.min.js"  type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="../static/js/jquery-migrate-1.1.0.min.js"  type="text/javascript" charset="utf-8"></script>-->
+
+<!--<script src="../static/ckeditor/ckeditor.js"></script>-->
+<!--&lt;!&ndash; Data Tables &ndash;&gt;-->
+<!--<script src="../static/js/plugins/dataTables/jquery.dataTables.js"></script>-->
+<!--<script src="../static/js/plugins/dataTables/dataTables.bootstrap.js"></script>-->
+<!--<script src="../static/js/plugins/dataTables/dataTables.responsive.js"></script>-->
+<!--<script src="../static/js/plugins/dataTables/dataTables.tableTools.min.js"></script>-->
+<!--<script src="../static/js/plugins/datapicker/Moment.js"></script>-->
+<!--<script src="../static/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>-->
+<!--<script src="../static/js/plugins/jsTree/jstree.min.js"></script>-->
+<!--<script src="../static/js/plugins/chosen/chosen.jquery.js"></script>-->
+<!--<script src="../static/js/common.js"></script>-->
+<!--<script src="../static/webuploader/js/webuploader.min.js"></script>-->
+<!--&lt;!&ndash; 页面的js列表 &ndash;&gt;-->
+<!--<script src="../static/js/sha1.js"></script>-->
+<!--<script src="../static/h5upload-master/js/jquery.h5upload.js"></script>-->
+--}}
+<script  src="{{:script}}" type="text/javascript"></script>
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+    //整个网站通用的脚本
+    var ajax = function (url, callback, data, method, errorCallback) {
+        var defaultStatusCallback = {
+            '400': function (obj, s) {
+                cAlert("\u8bf7\u68c0\u67e5\u60a8\u7684\u8f93\u5165\u662f\u5426\u6b63\u786e\uff0c\u6216\u8005\u53ef\u80fd\u7f51\u7edc\u51fa\u73b0\u4e86\u5f02\u5e38");
+            },
+            '401': function (obj, s) {
+                cAlert("\u60a8\u8fd8\u6ca1\u6709\u767b\u5f55\uff0c\u6216\u8005\u6ca1\u6709\u6743\u9650\u8bbf\u95ee\u8be5\u529f\u80fd");
+            },
+            '403': function (obj, s) {
+                cAlert('\u62b1\u6b49\uff0c\u60a8\u9700\u8981\u5148\u767b\u5f55\u6709\u6b64\u6743\u9650\u7684\u5e10\u53f7\u624d\u80fd\u4f7f\u7528\u8be5\u529f\u80fd,请重新登录');
+            },
+            '404': function (obj, s) {
+                cAlert("\u53ef\u80fd\u60a8\u9700\u8981\u5237\u65b0\u7f51\u9875\uff0c\u6240\u4f7f\u7528\u7684\u6570\u636e\u672a\u627e\u5230");
+            },
+            '409': function (obj, s) {
+                cAlert("\u5f53\u524d\u72b6\u6001\u4e0b\uff0c\u64cd\u4f5c\u65e0\u6cd5\u5b8c\u6210");
+            },
+            '500': function (obj, s) {
+                cAlert("\u7cfb\u7edf\u51fa\u9519\uff0c\u8bf7\u91cd\u8bd5");
+            },
+            '503': function (obj, s) {
+                cAlert("\u7cfb\u7edf\u51fa\u9519\uff0c\u8bf7\u91cd\u8bd5");
+            },
+            '0': function (obj, s) {
+                //projectLib.alert("\u6240\u8fde\u63a5\u7684\u7f51\u7ad9\u65e0\u54cd\u5e94\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u8fde\u63a5\u662f\u5426\u6b63\u5e38");
+                console.log("网络连接不稳定");
+            }
+        };
+        method = method || "POST";
+
+        errorCallback = errorCallback || function (xhr, msg,httpMsg) {
+                cAlert("发生错误："+msg+" "+httpMsg);
+                };
+        var t=new Date().getTime();
+        $.ajax({
+            url: url,
+            method: method,
+            timeout: 10000,
+            dataType: 'json',
+            data:data,
+            statusCode: defaultStatusCallback,
+            success: function (ret) {
+                var ct=new Date().getTime();
+                console.log("cost"+(ct-t));
+                callback.apply(window,[ret]);
+            },
+            error: errorCallback
+        });
+    };
+    var cAlert = function (msg, title) {
+        title=title || "提醒";
+        $("#commonMessageTitle").html(title);
+        $("#commonMessageContent").html(msg);
+        $("#commonMessageBtnConfirm").off("click");
+        $("#commonMessageBtnCancle").css({"display":"none"});
+        $("#commonMessageBtnConfirm").off("click").on("click",function(){$('#commonMessage').modal('hide');});
+        $('#commonMessage').modal('show');
+
+    };
+    var cConfirm = function (msg, callback) {
+        var title= "信息";
+        $("#commonMessageBtnConfirm").off("click").on("click",callback);
+        $("#commonMessageTitle").html(title);
+        $("#commonMessageContent").html(msg);
+        $("#commonMessageBtnCancle").css({"display":"inline-block"});
+        $('#commonMessage').modal('show');
+    };
+    var datatableLanguage = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+    $(document).ready(function () {
+        var sidemenu=$('#side-menu');
+        if(sidemenu.length!=0 && ($.fn.metisMenu || $.metisMenu)){
+            sidemenu.metisMenu();
+        }
+        var date=new Date();
+        $('#currentTime').html(date.getFullYear()+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日");
+
+        //$(".dataTables_filter input").attr('placeholder', '搜索');
+    });
+
+</script>
